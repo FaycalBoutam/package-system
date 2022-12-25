@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pakages', function (Blueprint $table) {
+        Schema::create('packages', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
             $table->string('status')->default('arrived'); // arrived, delivering, delivered, returned 
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pakages');
+        Schema::dropIfExists('packages');
     }
 };

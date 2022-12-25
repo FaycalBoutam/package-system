@@ -4,7 +4,12 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
+import { Head, useForm } from '@inertiajs/inertia-vue3';
+import Multiselect from '@vueform/multiselect';
+
+const props = defineProps({
+    users: Array
+});
 
 const form = useForm({
     user_id: '',
@@ -18,12 +23,22 @@ const submit = () => {
     });
 };
 </script>
-
+<style src="@vueform/multiselect/themes/default.css"></style>
 <template>
     <GuestLayout>
         <Head title="Add Package" />
 
         <!-- user, status, note -->
+
+        <Multiselect
+            v-model="value"
+            placeholder="Assign to appartement"
+            track-by="id"
+            label="apartment"
+            :close-on-select="false"
+            :searchable="true"
+            :options="users"
+        />
 
         <form @submit.prevent="submit">
             <div>
