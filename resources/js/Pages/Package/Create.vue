@@ -1,10 +1,14 @@
 <script setup>
-import GuestLayout from '@/Layouts/GuestLayout.vue';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
+import { Head, useForm } from '@inertiajs/inertia-vue3';
+import Multiselect from '@vueform/multiselect';
+
+const props = defineProps({
+    users: Object
+});
 
 const form = useForm({
     user_id: '',
@@ -13,33 +17,62 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('register'), {
-        onFinish: () => form.reset('password', 'password_confirmation'),
-    });
+    form.post(route('packages.store'));
 };
 </script>
 
+<style src="@vueform/multiselect/themes/default.css"></style>
+
 <template>
-    <GuestLayout>
+    <AuthenticatedLayout>
         <Head title="Add Package" />
 
-        <!-- user, status, note -->
-
         <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="first_name" value="First Name" />
 
-                <TextInput
-                    id="first_name"
-                    type="text"
-                    class="mt-1 block w-full"
-                    v-model="form.first_name"
-                    required
-                    autofocus
-                    autocomplete="first_name"
+            <!-- User -->
+            <div>
+                <InputLabel for="apartment" value="App" />
+
+                <Multiselect
+                    id="apartment"
+                    v-model="form.user_id"
+                    placeholder="Assign to appartement"
+                    track-by="id"
+                    label="apartment"
+                    :searchable="true"
+                    :options="users"
                 />
 
-                <InputError class="mt-2" :message="form.errors.first_name" />
+                <InputError class="mt-2" :message="form.errors.user_id" />
+            </div>
+
+            <!-- Status -->
+            <div class="mt-4">
+                <InputLabel for="status" value="Status" />
+
+                <Multiselect
+                    id="status"
+                    v-model="form.status"
+                    placeholder="Status of the package"
+                    :options="['Arrived', 'Delivering', 'Delivered', 'Returned']"
+                />
+
+                <InputError class="mt-2" :message="form.errors.status" />
+            </div>
+
+            <!-- Note -->
+            <div class="mt-4">
+                <InputLabel for="note" value="Notes (the package owner can see this)" />
+
+                <textarea 
+                    id="note" 
+                    class="mt-1 block w-full" 
+                    v-model="form.note"
+                    name="note"
+                    placeholder="Add if needed">
+                </textarea>
+
+                <InputError class="mt-2" :message="form.errors.note" />
             </div>
 
             <div class="mt-4">
@@ -48,5 +81,5 @@ const submit = () => {
                 </PrimaryButton>
             </div>
         </form>
-    </GuestLayout>
+    </AuthenticatedLayout>
 </template>
