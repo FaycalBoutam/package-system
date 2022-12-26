@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->string('status')->default('arrived'); // arrived, delivering, delivered, returned 
-            $table->text('note');
+            $table->text('note')->nullable();
             $table->timestamps();
         });
     }
