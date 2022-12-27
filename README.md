@@ -13,6 +13,10 @@ Admin can see, create, edit and delete packages.
     - factory/seed for users & packages
     - using @vueform/multiselect
 
+## How to install?
+1. Clone the project
+2. In root folder run "composer install"
+
 ## To do
     - only admin, staff can create, edit packages 
     - only admin can delete packages 
