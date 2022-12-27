@@ -16,13 +16,13 @@ class PackageController extends Controller
     public function index()
     {
         if (Auth::user()->role == 0 || Auth::user()->role == 1) {
-            $packages = PackageResource::collection(Package::with('user')->get());
+            $packages = PackageResource::collection(Package::with('user')->paginate(8));
         } else {
             $packages = PackageResource::collection(
                 Package::
                     with('user')
                     ->where('user_id', '=', Auth::user()->id)
-                    ->get()
+                    ->paginate(8)
             );
         }
         
