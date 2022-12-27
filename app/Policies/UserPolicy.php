@@ -9,8 +9,14 @@ class UserPolicy
 {
     use HandlesAuthorization;
 
-    public function can_edit_packages(User $user)
+    public function isAdmin(User $user)
+    {
+        return $user->role === 0;
+    }
+    
+    public function isStaff(User $user)
     {
         return $user->role === 0 || $user->role === 1;
     }
+
 }

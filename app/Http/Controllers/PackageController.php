@@ -26,12 +26,15 @@ class PackageController extends Controller
             );
         }
         
-        return Inertia::render('Package/Index', ['packages' => $packages]);
+        return Inertia::render('Package/Index', [
+            'packages' => $packages, 
+            'user_role' => Auth::user()->role
+        ]);
     }
 
     public function create()
     {
-        $this->authorize('can_edit_packages', User::class);
+        $this->authorize('isStaff', User::class);
 
         $users = User::all();
         $users = $users->pluck('apartment', 'id');
@@ -40,10 +43,42 @@ class PackageController extends Controller
 
     public function store(PackageStoreRequest $request)
     {
-        $this->authorize('can_edit_packages', User::class);
+        $this->authorize('isStaff', User::class);
 
         $package = Package::create($request->validated());
 
         return redirect(RouteServiceProvider::HOME);
     }
+
+    public function edit(Package $package)
+    {
+        $this->authorize('isStaff', User::class);
+
+        $users = User::all();
+        $users = $users->pluck('apartment', 'id');
+
+        return Inertia::render('Package/Edit', [
+            'pack' => $package,
+            'users' => $users
+        ]);
+    }
+
+    public function update(PackageStoreRequest $request, Package $package)
+    {
+        $this->authorize('isStaff', User::class);
+
+        $package->update($request->validated());
+
+        return redirect(RouteServiceProvider::HOME);
+    }
+
+    public function destroy(Package $package)
+    {
+        $this->authorize('isAdmin', User::class);
+
+        $package->delete();
+
+        return redirect(RouteServiceProvider::HOME);
+    }
+
 }
