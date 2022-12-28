@@ -1,6 +1,5 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import DangerButton from '@/Components/DangerButton.vue';
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 
 const props = defineProps({
@@ -90,6 +89,16 @@ function removePackage(id) {
                     </tr>
                 </tbody>
             </table>
+
+            <div class="mt-8 float-right">
+                <Link 
+                    v-for="link in packages.meta.links"
+                    v-html="link.label"
+                    :class="(link.url ? 'text-blue-500' : 'text-gray-500 pointer-events-none'), (link.active ? 'border-b-4 border-blue-500' : '')"
+                    class="px-1"
+                    :href="link.url">
+                </Link>
+            </div>
         </div>
     </AuthenticatedLayout>
 </template>
