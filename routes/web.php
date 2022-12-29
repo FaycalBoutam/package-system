@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\PackageController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PackageController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -13,21 +13,16 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('welcome');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard.index');
+    Route::get('/dashboard/{id}/edit', [AdminController::class, 'edit'])->name('dashboard.edit');
+    Route::patch('/dashboard/{id}', [AdminController::class, 'update'])->name('dashboard.update');
+});
 
 Route::middleware('auth')->group(function () {
-    // Profile
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    
-    // Package
     Route::resource('packages', PackageController::class);
 });
-
 
 require __DIR__.'/auth.php';
