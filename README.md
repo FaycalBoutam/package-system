@@ -7,6 +7,8 @@ Staff can see, create, and edit packages.
 
 Admin can also delete packages, and edit users.
 
+### Built with Laravel 9, Vue 3, Inertia
+
 
 ## Progress
 - create Package model/resource
