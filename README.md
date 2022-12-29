@@ -11,7 +11,9 @@ Admin can see, create, edit and delete packages.
 . generate resources
 . create policy
 . factory/seed for users & packages
+. CRUD packages
 . install @vueform/multiselect
+. CRUD staff/users (admin)
 . tests
 
 ## How to install?
@@ -19,5 +21,5 @@ Admin can see, create, edit and delete packages.
 2. In root folder run "composer install"
 
 ## To do 
-
+. create middleware for admin to prevent access to routes when not needed
 

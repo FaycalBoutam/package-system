@@ -16,13 +16,13 @@ class PackageController extends Controller
     public function index()
     {
         if (Auth::user()->role == 0 || Auth::user()->role == 1) {
-            $packages = PackageResource::collection(Package::with('user')->paginate(8));
+            $packages = PackageResource::collection(Package::with('user')->latest()->paginate(8));
         } else {
             $packages = PackageResource::collection(
                 Package::
                     with('user')
                     ->where('user_id', '=', Auth::user()->id)
-                    ->paginate(8)
+                    ->latest()->paginate(8)
             );
         }
         
@@ -69,7 +69,7 @@ class PackageController extends Controller
 
         $package->update($request->validated());
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect(route('packages.index'))->with('success', 'Package is updated.');
     }
 
     public function destroy(Package $package)
@@ -78,7 +78,7 @@ class PackageController extends Controller
 
         $package->delete();
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect(route('packages.index'))->with('success', 'Package is removed.');
     }
 
 }
