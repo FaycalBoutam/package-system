@@ -5,7 +5,7 @@ Users can only see the packages assigned to them.
 
 Staff can see, create, and edit packages.
 
-Admin can see, create, edit and delete packages.
+Admin can also delete packages, and edit users.
 
 
 ## Progress
