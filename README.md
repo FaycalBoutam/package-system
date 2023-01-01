@@ -2,43 +2,62 @@
 It's a packaging system for condos/apartments, the reception office will receive the package, and the receptionist will add the package and assign it to the correct apartment.
 
 Users can only see the packages assigned to them.
-
 Staff can see, create, and edit packages.
-
-Admin can also delete packages, and edit users.
-
-### Built with Laravel 9, Vue 3, Inertia
-
+Admin can see, create, edit and delete packages.
 
 ## Progress
-- create Package model/resource
-- custom request with custom error messages
-- generate resources
-- create policy
-- factory/seed for users & packages
-- CRUD packages
-- install @vueform/multiselect
-- CRUD staff/users (admin)
-- tests
+• create Package model/resource
+
+• custom request with custom error messages
+
+• generate resources
+
+• create policy
+
+• factory/seed for users & packages
+
+• CRUD packages
+
+• install @vueform/multiselect
+
+• CRUD staff/users (admin)
+
+• tests
+
+• email
+
+• job/queue
+
+## Requirements
+• PHP 8.0 or higher
 
 ## How to install?
-1. Clone the project
-2. In root folder run "composer install"
+Clone the repository
 
+`git clone git@github.com:FaycalBoutam/package-system.git`
 
-User (can only see their packages):
+Cd to the package-system directory
 
-email: user@email.com pass: user123
+`cd package-system`
 
-Staff (can see all packages, add & edit them):
+Install composer
 
-email: staff@email.com pass: staff123
+`composer install`
 
-Admin (like staff but can delete packages & edit users):
+Create the .env file by duplicating the .env.example file
 
-email: admin@email.com pass: admin123
+`cp .env.example .env`
 
+Set the APP_KEY value
 
-## To do 
-. create middleware for admin to prevent access to routes when not needed
+`php artisan key:generate`
 
+Clear your cache & config (OPTIONAL)
+
+`php artisan cache:clear && php artisan config:clear`
+
+Run both these cmds
+
+`php artisan serve`
+
+`npm run dev`
