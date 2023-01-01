@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Package;
+use App\Mail\PackageMail;
+use App\Jobs\NewPackageJob;
 use Illuminate\Http\Request;
+use App\Jobs\NewPackageEmailSend;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\PackageResource;
 use App\Providers\RouteServiceProvider;
 use App\Http\Requests\PackageStoreRequest;
@@ -46,6 +50,9 @@ class PackageController extends Controller
         $this->authorize('isStaff', User::class);
 
         $package = Package::create($request->validated());
+        $user = User::where('id', '=', $package->user->id)->first();
+
+        NewPackageEmailSend::dispatch();
 
         return redirect(RouteServiceProvider::HOME);
     }
