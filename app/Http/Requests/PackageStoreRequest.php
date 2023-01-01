@@ -26,7 +26,7 @@ class PackageStoreRequest extends FormRequest
         return [
             'user_id' => 'required|integer',
             'status' => 'required|string|max:255',
-            'note' => 'min:2',
+            'note' => '',
         ];
     }
 
